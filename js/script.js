@@ -61,7 +61,7 @@ repoList.addEventListener("click", function (e) {
 const specialRepoInfo = async function (repoName) {
   const request = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
   const repoInfo = await request.json();
-  console.log(repoInfo);
+  // console.log(repoInfo);
 
   const fetchLanguages = await fetch(repoInfo.languages_url);
   const languageData = await fetchLanguages.json();
@@ -77,22 +77,22 @@ const specialRepoInfo = async function (repoName) {
 };
 
 const displayRepoInfo = function (repoInfo, languages) {
+  viewReposButton.classList.remove("hide");
   repoDataSection.innerHTML = "";
 
   repoDataSection.classList.remove("hide");
   allRepoInfo.classList.add("hide");
 
   const div = document.createElement("div");
-  div.innerHTML = `<h3>Name: ${repoInfo.name}</h3>
+  div.innerHTML = `
+    <h3>Name: ${repoInfo.name}</h3>
     <p>Description: ${repoInfo.description}</p>
     <p>Default Branch: ${repoInfo.default_branch}</p>
     <p>Languages: ${languages.join(", ")}</p>
-    <a class="visit" href="${repoInfo.html_url}" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>`;
+    <a class="visit" href="${repoInfo.html_url}" target="_blank" rel="noreferrer noopener">View Repo on GitHub!</a>
+    `;
 
   repoDataSection.append(div);
-
-  viewReposButton.classList.remove("hide");
-
 };
 
 viewReposButton.addEventListener("click", function () {
